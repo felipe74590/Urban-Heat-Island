@@ -21,9 +21,7 @@ dependencies = [
 ]
 
 [tool.uv]
-dev-dependencies = [
-    "ruff>=0.6.6",
-]
+dev-dependencies = []
 
 [tool.ruff]
 line-length = 120
