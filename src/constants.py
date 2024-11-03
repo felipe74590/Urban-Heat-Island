@@ -1,6 +1,6 @@
 ## Default Inputs: Gather Satillite Imaging for Austin, Texas in 2020
 Default_Year = 2020
-Default_Coordinates = [-97.74414483713234, 30.26562490046467]
+Default_City = "Austin, Texas"
 
 ## Heat Map Creation Constants
 Cloud_Coverage = 10
