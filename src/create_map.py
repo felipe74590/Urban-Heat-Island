@@ -27,7 +27,7 @@ def collect_LST(roi, start_time, end_time):
     )
     num_images = landsat.size().getInfo()
     if num_images == 0:
-        raise Exception(
+        raise RuntimeError(
             "Error, Not enough images were available for the heat map to be created. Try another city, or a different year."
         )
 
@@ -46,10 +46,17 @@ def collect_Land_Use(roi, start_time, end_time):
     """
     Collect Land Use data to help predict land surface temperature based on land use, vegetation, and other features.
     """
-    land_use_data = ee.Image("MODIS/006/MCD12Q1").select("LC_Type1").clip(roi)
-    land_use_values = land_use_data.reduceRegion(
+    land_use_dataset = (
+        ee.ImageCollection("MODIS/006/MCD12Q1").filterDate(start_time, end_time).select("LC_Type1").clip(roi)
+    )
+    if not land_use_dataset:
+        raise Exception(f"Land use data for the year {start_time} is not available.")
+
+    land_use_values = land_use_dataset.reduceRegion(
         reducer=ee.Reducer.mode(), geometry=roi.geometry(), scale=30, bestEffort=True
     )
+    # Check if the land use data for the year exists
+
     return land_use_values
 
 
