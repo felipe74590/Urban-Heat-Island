@@ -1,5 +1,9 @@
 version = 1
 requires-python = ">=3.12"
+resolution-markers = [
+    "python_full_version < '3.13'",
+    "python_full_version >= '3.13'",
+]
 
 [[package]]
 name = "anyio"
@@ -396,7 +400,7 @@ wheels = [
 
 [[package]]
 name = "earthengine-api"
-version = "1.1.5"
+version = "1.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "google-api-python-client" },
@@ -406,9 +410,9 @@ dependencies = [
     { name = "httplib2" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5f/a0/36b27d58d1a7709aa3c2f24c2f4637db68c910c960d27cb0ff85611b2f69/earthengine_api-1.1.5.tar.gz", hash = "sha256:3b71ae98eb9419e93d63937c9094d90f65a98b6c487df2a1912ee23e82db3130", size = 409290 }
+sdist = { url = "https://files.pythonhosted.org/packages/12/18/e04dd186520dd1c4eef948c33eea9979325db1ecd6cb8ced776b1f69226c/earthengine_api-1.2.0.tar.gz", hash = "sha256:914c5d6c04d56ea714349bf98e1dae4245d4ab6b2b889b567af31343017e9a8f", size = 410251 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fc/f4/50418caae1800a3236cbf82d4632200b06f7b89695c0c75a4cc0c6d7a8e7/earthengine_api-1.1.5-py3-none-any.whl", hash = "sha256:7c5e8c1a40e5b186312eb7b060efec390871afb60199e1a0c356efb1d83c833b", size = 455071 },
+    { url = "https://files.pythonhosted.org/packages/06/62/16eddd04dc9ee09028c296af72205c14b6ce9d6ba88c243b1e4c5a366f36/earthengine_api-1.2.0-py3-none-any.whl", hash = "sha256:a0df60876c1e0445bbb210472aac8e3ef009988fc4cc704c1df1a66a25247e3b", size = 455960 },
 ]
 
 [[package]]
@@ -509,7 +513,7 @@ wheels = [
 
 [[package]]
 name = "geemap"
-version = "0.35.0"
+version = "0.35.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "bqplot" },
@@ -531,9 +535,9 @@ dependencies = [
     { name = "python-box" },
     { name = "scooby" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d9/1d/2a45ae42531102cb19575b180adf5e1cca0142d144ea982b0273b5a5d29e/geemap-0.35.0.tar.gz", hash = "sha256:724955d1a2f12289aebfccc8c276551b1f65340815f1f2942228892792e39a0a", size = 2780627 }
+sdist = { url = "https://files.pythonhosted.org/packages/76/5e/7200f49710b0558682e014b1a3995780d8f928c3c2209bc90d82380ee43f/geemap-0.35.1.tar.gz", hash = "sha256:98f3f17fb1d07a6fe43b06f03fb680e10517adfd96002184015a3d4fe92435d6", size = 2780502 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/35/e7/26c7cd6ee1242c712c0850e4411d130272f2ca3b11ed99b3a117b9c22895/geemap-0.35.0-py2.py3-none-any.whl", hash = "sha256:2ae1c02d7b0554b9be8b3e4c31b8609f05beb3e03bbc21b91ab7c5bd3399c04b", size = 2267918 },
+    { url = "https://files.pythonhosted.org/packages/c3/52/359a313cef0f80f45e2032d4182d8627ff003cfc05451b13a53e0edb3ea9/geemap-0.35.1-py2.py3-none-any.whl", hash = "sha256:61e9d1b9e9f41e597702f5efb187f3951113f4f67d625403fa4ea41bc4b6a508", size = 2267566 },
 ]
 
 [[package]]
@@ -575,7 +579,7 @@ wheels = [
 
 [[package]]
 name = "google-api-core"
-version = "2.21.0"
+version = "2.22.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "google-auth" },
@@ -584,14 +588,14 @@ dependencies = [
     { name = "protobuf" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/28/c8/046abf3ea11ec9cc3ea6d95e235a51161039d4a558484a997df60f9c51e9/google_api_core-2.21.0.tar.gz", hash = "sha256:4a152fd11a9f774ea606388d423b68aa7e6d6a0ffe4c8266f74979613ec09f81", size = 159313 }
+sdist = { url = "https://files.pythonhosted.org/packages/00/c2/425f97c2087affbd452a05d3faa08d97de333f2ca554733e1becab55ee4e/google_api_core-2.22.0.tar.gz", hash = "sha256:26f8d76b96477db42b55fd02a33aae4a42ec8b86b98b94969b7333a2c828bf35", size = 159700 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6a/ef/79fa8388c95edbd8fe36c763259dade36e5cb562dcf3e85c0e32070dc9b0/google_api_core-2.21.0-py3-none-any.whl", hash = "sha256:6869eacb2a37720380ba5898312af79a4d30b8bca1548fb4093e0697dc4bdf5d", size = 156437 },
+    { url = "https://files.pythonhosted.org/packages/ba/7b/1137a9811be73d8ff8238eb2d9f60f0bc0bb6a1edd87f9d47557ab937a2b/google_api_core-2.22.0-py3-none-any.whl", hash = "sha256:a6652b6bd51303902494998626653671703c420f6f4c88cfd3f50ed723e9d021", size = 156538 },
 ]
 
 [[package]]
 name = "google-api-python-client"
-version = "2.149.0"
+version = "2.151.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "google-api-core" },
@@ -600,9 +604,9 @@ dependencies = [
     { name = "httplib2" },
     { name = "uritemplate" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ff/36/a587319840f32c8a28b6700805ad18a70690f985538ea49e87e210118884/google_api_python_client-2.149.0.tar.gz", hash = "sha256:b9d68c6b14ec72580d66001bd33c5816b78e2134b93ccc5cf8f624516b561750", size = 11791789 }
+sdist = { url = "https://files.pythonhosted.org/packages/7c/87/5a753c932a962f1ac72403608b6840500187fd9d856127a360b7a30c59ec/google_api_python_client-2.151.0.tar.gz", hash = "sha256:a9d26d630810ed4631aea21d1de3e42072f98240aaf184a8a1a874a371115034", size = 12030480 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e1/33/b2fa6a8d7ca786c07ab4ab671aaa8dd5abb32893636fc44f684c396470cc/google_api_python_client-2.149.0-py2.py3-none-any.whl", hash = "sha256:1a5232e9cfed8c201799d9327e4d44dc7ea7daa3c6e1627fca41aa201539c0da", size = 12299231 },
+    { url = "https://files.pythonhosted.org/packages/75/32/675ec68ed1bd27664d74f980cd262504603da0b683c2dd09c8725f576236/google_api_python_client-2.151.0-py2.py3-none-any.whl", hash = "sha256:4427b2f47cd88b0355d540c2c52215f68c337f3bc9d6aae1ceeae4525977504c", size = 12534219 },
 ]
 
 [[package]]
@@ -2136,14 +2140,12 @@ name = "urban-heat-island"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
-    { name = "folium" },
     { name = "geemap" },
     { name = "geopy" },
     { name = "ipykernel" },
     { name = "ipyleaflet" },
     { name = "ipywidgets" },
     { name = "jupyterlab" },
-    { name = "matplotlib" },
     { name = "notebook" },
     { name = "pandas" },
     { name = "pre-commit" },
@@ -2153,14 +2155,12 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "folium", specifier = ">=0.18.0" },
-    { name = "geemap", specifier = ">=0.35.0" },
+    { name = "geemap", specifier = ">=0.35.1" },
     { name = "geopy", specifier = ">=2.4.1" },
     { name = "ipykernel", specifier = ">=6.29.5" },
     { name = "ipyleaflet", specifier = ">=0.19.2" },
     { name = "ipywidgets", specifier = ">=8.1.5" },
     { name = "jupyterlab", specifier = ">=4.2.5" },
-    { name = "matplotlib", specifier = ">=3.9.2" },
     { name = "notebook", specifier = ">=7.2.2" },
     { name = "pandas", specifier = ">=2.2.3" },
     { name = "pre-commit", specifier = ">=4.0.1" },

@@ -2,7 +2,7 @@ import argparse
 
 from geopy.geocoders import Nominatim
 from geopy.exc import GeopyError
-from src.create_map import create_heat_map
+from src.create_map import setting_region_of_interest
 from src.constants import Default_City, Default_Year
 
 
@@ -36,10 +36,15 @@ if __name__ == "__main__":
         help="Will provide the option to enter to enter a year, ex: 2020.",
         default=Default_Year,
     )
+
+    parser.add_argument(
+        "-t", "--task", type=str, help="Select between 'Train Model' and 'Heat Map'. ", default="Heat Map"
+    )
     args = parser.parse_args()
 
     location = get_city_coordinates(args.city)
     year = args.year
+    task = args.task
 
     print("Hello from urban-heat-island!")
-    create_heat_map(location, year)
+    setting_region_of_interest(location, year, task)
