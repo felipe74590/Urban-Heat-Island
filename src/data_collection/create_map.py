@@ -1,10 +1,27 @@
 import ee
-import geemap
+import geemap.foliumap as geemap
+from geopy.geocoders import Nominatim
+from geopy.exc import GeopyError
 from decouple import config
-from src.constants import Cloud_Coverage, Spatial_Res, Geo_Tolerance, temperature_palette, temp_ranges
+from constants import Cloud_Coverage, Spatial_Res, Geo_Tolerance, temperature_palette, temp_ranges
 
 HEAT_MAP_GEE_PROJECT = config("GEE_PROJECT")
 ee.Initialize(project=HEAT_MAP_GEE_PROJECT)
+
+
+def get_city_coordinates(city: str) -> list[int]:
+    """Asks user for city and convert to coordinates."""
+    city_name = city.title()
+    try:
+        geolocator = Nominatim(user_agent="urban_heat_island")
+        location = geolocator.geocode(city_name)
+
+    except GeopyError as e:
+        raise ValueError(f"Geolocation service error: {e}")
+
+    city_coordinates = [location.longitude, location.latitude]
+    print(f"The center coordinates for your city are {city_coordinates}")
+    return city_coordinates
 
 
 def collect_LST(roi, start_time, end_time):
@@ -47,7 +64,11 @@ def collect_Land_Use(roi, start_time, end_time):
     Collect Land Use data to help predict land surface temperature based on land use, vegetation, and other features.
     """
     land_use_dataset = (
-        ee.ImageCollection("MODIS/006/MCD12Q1").filterDate(start_time, end_time).select("LC_Type1").clip(roi)
+        ee.ImageCollection("MODIS/006/MCD12Q1")
+        .select("LC_Type1")
+        .filterDate(start_time, end_time)
+        .filterBounds(roi)
+        .first()
     )
     if not land_use_dataset:
         raise Exception(f"Land use data for the year {start_time} is not available.")
@@ -90,20 +111,20 @@ def create_heat_map(roi, city, start_time, end_time):
     Map.addLayer(roi, {}, "borders", True)
     Map.addLayer(
         uhi_class.clip(roi),
-        {"min": 0.371, "max": 3.898, "opacity": 0.47, "palette": temperature_palette},
+        {"min": 0.371, "max": 3.898, "opacity": 0.40, "palette": temperature_palette},
         "uhi_class",
         True,
     )
 
-    legend_dict = {
-        f"{temp_ranges[i]} - {temp_ranges[i+1]}°F": temperature_palette[i] for i in range(len(temp_ranges) - 1)
-    }
+    # legend_dict = {
+    #     f"{temp_ranges[i]} - {temp_ranges[i+1]}°F": temperature_palette[i] for i in range(len(temp_ranges) - 1)
+    # }
 
-    Map.add_legend(
-        title="Temperature (°F)", legend_keys=list(legend_dict.keys()), legend_colors=list(legend_dict.values())
-    )
-
-    Map.save(f"heat_map_{start_time}.html")
+    # Map.add_legend(
+    #     title="Temperature (°F)", legend_keys=list(legend_dict.keys()), legend_colors=list(legend_dict.values())
+    # )
+    # Map.save(f"heat_map_{start_time}.html")
+    return Map
 
 
 def setting_region_of_interest(coordinates, year: str, task: str):
@@ -124,4 +145,5 @@ def setting_region_of_interest(coordinates, year: str, task: str):
             # collect_Land_Use(roi, start_date, end_date)
 
         case "Heat Map":
-            create_heat_map(roi, city, start_date, end_date)
+            heat_map = create_heat_map(roi, city, start_date, end_date)
+            return heat_map
