@@ -3,7 +3,7 @@ Studying urban heat island effect in Austin, Texas using Google Earth Engine.
 
 To run main.py run ```uv run main.py -c``` in your terminal. This will prompt you enter a city name to generate a heat map for that urban center. To run the default map, run ```uv run main.py```, this will map the urban heat island of Austin, Texas as a default.
 
-To create Heat Map dashboard in streamlit run ```uv run streamlit run src/app.py```
+To create Heat Map dashboard in streamlit run ```uv run streamlit run app.py```
 
 ## Running GOOGLE Earth Engine
 Recommend making your our project with Google Engine if testing.

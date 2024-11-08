@@ -4,7 +4,7 @@ from geopy.geocoders import Nominatim
 from geopy.exc import GeopyError
 from decouple import config
 from constants import Cloud_Coverage, Spatial_Res, Geo_Tolerance, temperature_palette, temp_ranges, Veg_Indices, Veg_Res
-from ml_model import train_model
+from data_collection.ml_model import train_model
 
 HEAT_MAP_GEE_PROJECT = config("GEE_PROJECT")
 ee.Initialize(project=HEAT_MAP_GEE_PROJECT)
@@ -65,7 +65,7 @@ def collect_Land_Use(roi, start_time, end_time):
     Collect Land Use data to help predict land surface temperature based on land use, vegetation, and other features.
     """
     land_use_dataset = (
-        ee.ImageCollection("MODIS/006/MCD12Q1")
+        ee.ImageCollection("MODIS/061/MCD12Q1")
         .select("LC_Type1")
         .filterDate(start_time, end_time)
         .filterBounds(roi)

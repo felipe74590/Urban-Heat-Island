@@ -27,9 +27,10 @@ def train_model(data: dict):
 
         # Preparing the features (X) and target (y)
         # For simplicity, using mode for land use and mean values for NDVI/EVI as a single feature set
+
         land_use = land_use_data.getInfo().get("LC_Type1")
-        ndvi = vegetation_data.getInfo().get("NDVI")
-        evi = vegetation_data.getInfo().get("EVI")
+        ndvi = vegetation_data[1].getInfo().get("NDVI")
+        evi = vegetation_data[1].getInfo().get("EVI")
 
         # Constructing the features matrix and target array
         X = pd.DataFrame({"Land_Use": [land_use], "NDVI": [ndvi], "EVI": [evi]})

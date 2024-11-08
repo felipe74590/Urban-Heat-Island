@@ -1,6 +1,6 @@
 import argparse
 from data_collection.create_map import setting_region_of_interest, get_city_coordinates
-from src.constants import Default_City, Default_Year
+from constants import Default_City, Default_Year
 
 
 if __name__ == "__main__":
