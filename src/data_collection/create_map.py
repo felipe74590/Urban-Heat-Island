@@ -4,6 +4,7 @@ from geopy.geocoders import Nominatim
 from geopy.exc import GeopyError
 from decouple import config
 from constants import Cloud_Coverage, Spatial_Res, Geo_Tolerance, temperature_palette, temp_ranges, Veg_Indices, Veg_Res
+from ml_model import train_model
 
 HEAT_MAP_GEE_PROJECT = config("GEE_PROJECT")
 ee.Initialize(project=HEAT_MAP_GEE_PROJECT)
@@ -198,8 +199,18 @@ def setting_region_of_interest(coordinates, year: str, task: str):
         case "Train Model":
             print("Train Model, this is limited to certain years due to data provided.")
             # Organize when preparing ML model
-            # collect_LST(roi, start_date, end_date)
-            # collect_Land_Use(roi, start_date, end_date)
+            lst_image, lst_data = collect_LST(roi, start_date, end_date)
+            land_use_data = collect_Land_Use(roi, start_date, end_date)
+            veg_data = collect_vegetation_indices(roi, start_date, end_date)
+
+            data = {
+                "LST": lst_data,
+                "Land_Use": land_use_data,
+                "Vegetation": veg_data,
+            }
+
+            model, metrics = train_model(data)
+            print(f"Training complete. Model Metrics: {metrics}")
 
         case "Heat Map":
             heat_map = create_heat_map(roi, city, start_date, end_date)
