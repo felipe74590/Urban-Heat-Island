@@ -15,6 +15,7 @@ dependencies = [
     "pandas>=2.2.3",
     "pre-commit>=4.0.1",
     "python-decouple>=3.8",
+    "scikit-learn>=1.5.2",
     "setuptools>=75.2.0",
     "streamlit>=1.39.0",
 ]
