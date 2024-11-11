@@ -1,6 +1,6 @@
 import streamlit as st
 from data_collection.create_map import setting_region_of_interest, get_city_coordinates
-from constants import Default_City, Default_Year
+from constants import DEFAULT_YEAR, DEFAULT_CITY
 
 
 def create_ubran_heat_map():
@@ -10,8 +10,8 @@ def create_ubran_heat_map():
     st.markdown("This dashboard displays a heat map created with Google Earth Engine.")
 
     st.sidebar.title("Options")
-    year = st.sidebar.number_input("Enter Year", min_value=2001, max_value=2020, value=Default_Year, step=1)
-    city = st.sidebar.text_input("Enter City", value=Default_City)
+    year = st.sidebar.number_input("Enter Year", min_value=2001, max_value=2020, value=DEFAULT_YEAR, step=1)
+    city = st.sidebar.text_input("Enter City", value=DEFAULT_CITY)
 
     try:
         city_coordinates = get_city_coordinates(city)

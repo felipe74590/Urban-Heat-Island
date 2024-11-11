@@ -1,6 +1,7 @@
 import argparse
 from data_collection.create_map import setting_region_of_interest, get_city_coordinates
-from constants import Default_City, Default_Year
+
+from constants import DEFAULT_CITY, DEFAULT_YEAR
 
 
 if __name__ == "__main__":
@@ -9,14 +10,14 @@ if __name__ == "__main__":
         "-c",
         "--city",
         help="Will provide the option to enter a city name in quotes, ex: 'New York'.",
-        default=Default_City,
+        default=DEFAULT_CITY,
     )
     parser.add_argument(
         "-y",
         "--year",
         type=int,
         help="Will provide the option to enter to enter a year, ex: 2020.",
-        default=Default_Year,
+        default=DEFAULT_YEAR,
     )
 
     parser.add_argument(
@@ -25,8 +26,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     location = get_city_coordinates(args.city)
-    year = args.year
-    task = args.task
 
     print("Hello from urban-heat-island!")
-    setting_region_of_interest(location, year, task)
+    setting_region_of_interest(location, args.year, args.task)
