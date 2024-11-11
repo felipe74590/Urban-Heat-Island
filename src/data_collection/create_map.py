@@ -3,7 +3,7 @@ import geemap.foliumap as geemap
 from geopy.geocoders import Nominatim
 from geopy.exc import GeopyError
 from decouple import config
-from constants import Cloud_Coverage, Spatial_Res, Geo_Tolerance, temperature_palette, temp_ranges, Veg_Indices, Veg_Res
+from constants import CLOUD_COVER, SPAITAL_RES, GEO_TOLERANCE, TEMP_PALETTE, TEMP_RANGES, VEG_INDICES, VEG_RES
 
 HEAT_MAP_GEE_PROJECT = config("GEE_PROJECT")
 ee.Initialize(project=HEAT_MAP_GEE_PROJECT)
@@ -35,7 +35,7 @@ def collect_LST(roi, start_time, end_time):
         .select("ST_B10")
         .filterDate(start_time, end_time)
         .filterBounds(roi)
-        .filter(ee.Filter.lt("CLOUD_COVER", Cloud_Coverage))
+        .filter(ee.Filter.lt("CLOUD_COVER", CLOUD_COVER))
         .map(
             lambda img: img.multiply(ee.Number(img.get("TEMPERATURE_MULT_BAND_ST_B10")))  # Gain
             .add(ee.Number(img.get("TEMPERATURE_ADD_BAND_ST_B10")))  # Offset
@@ -51,7 +51,7 @@ def collect_LST(roi, start_time, end_time):
     print(f"Number of images after filtering: {num_images}")
     thermal_infra_image = landsat.median()
     land_surface_temp_data = (
-        thermal_infra_image.reduceRegion(reducer=ee.Reducer.mean(), geometry=roi, scale=Spatial_Res, bestEffort=True)
+        thermal_infra_image.reduceRegion(reducer=ee.Reducer.mean(), geometry=roi, scale=SPAITAL_RES, bestEffort=True)
         .values()
         .get(0)
     )
@@ -93,7 +93,7 @@ def add_indices(image):
     }
 
     # Select indices from the calculations dictionary and return the image with added bands
-    index_bands = [index_calculations[idx] for idx in Veg_Indices if idx in index_calculations]
+    index_bands = [index_calculations[idx] for idx in VEG_INDICES if idx in index_calculations]
     return image.addBands(index_bands)
 
 
@@ -131,10 +131,10 @@ def collect_vegetation_indices(roi, start_date, end_date):
         raise ValueError("No images found for the given ROI and date range.")
 
     # Calculate median of selected indices
-    median_indices = landsat_with_indices.select(Veg_Indices).median()
+    median_indices = landsat_with_indices.select(VEG_INDICES).median()
 
     # Optionally reduce to the region with the specified scale
-    stats = median_indices.reduceRegion(reducer=ee.Reducer.mean(), geometry=roi, scale=Veg_Res, maxPixels=1e13)
+    stats = median_indices.reduceRegion(reducer=ee.Reducer.mean(), geometry=roi, scale=VEG_RES, maxPixels=1e13)
     return median_indices, stats
 
 
@@ -168,13 +168,13 @@ def create_heat_map(roi, city, start_time, end_time):
     Map.addLayer(roi, {}, "borders", True)
     Map.addLayer(
         uhi_class.clip(roi),
-        {"min": 0.371, "max": 3.898, "opacity": 0.40, "palette": temperature_palette},
+        {"min": 0.371, "max": 3.898, "opacity": 0.40, "palette": TEMP_PALETTE},
         "uhi_class",
         True,
     )
 
     # legend_dict = {
-    #     f"{temp_ranges[i]} - {temp_ranges[i+1]}°F": temperature_palette[i] for i in range(len(temp_ranges) - 1)
+    #     f"{TEMP_RANGES[i]} - {TEMP_RANGES[i+1]}°F": TEMP_PALETTE[i] for i in range(len(TEMP_RANGES) - 1)
     # }
 
     # Map.add_legend(
@@ -191,7 +191,7 @@ def setting_region_of_interest(coordinates, year: str, task: str):
     ## Approximate bounding box for Austin, Texas, creating a layer with legal boundraies
     city = ee.Geometry.Point(coordinates)
     table = ee.FeatureCollection("FAO/GAUL/2015/level2")
-    roi = table.filterBounds(city).map(lambda vec: vec.simplify(Geo_Tolerance))  # Region of Interest
+    roi = table.filterBounds(city).map(lambda vec: vec.simplify(GEO_TOLERANCE))  # Region of Interest
     start_date, end_date = f"{year}-01-01", f"{year}-12-31"
 
     match task:
