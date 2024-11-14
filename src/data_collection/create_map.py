@@ -4,6 +4,7 @@ from geopy.geocoders import Nominatim
 from geopy.exc import GeopyError
 from decouple import config
 from constants import CLOUD_COVER, SPAITAL_RES, GEO_TOLERANCE, TEMP_PALETTE, TEMP_RANGES, VEG_INDICES, VEG_RES
+from data_collection.ml_model import train_model
 
 HEAT_MAP_GEE_PROJECT = config("GEE_PROJECT")
 ee.Initialize(project=HEAT_MAP_GEE_PROJECT)
@@ -64,7 +65,7 @@ def collect_Land_Use(roi, start_time, end_time):
     Collect Land Use data to help predict land surface temperature based on land use, vegetation, and other features.
     """
     land_use_dataset = (
-        ee.ImageCollection("MODIS/006/MCD12Q1")
+        ee.ImageCollection("MODIS/061/MCD12Q1")
         .select("LC_Type1")
         .filterDate(start_time, end_time)
         .filterBounds(roi)
@@ -198,8 +199,18 @@ def setting_region_of_interest(coordinates, year: str, task: str):
         case "Train Model":
             print("Train Model, this is limited to certain years due to data provided.")
             # Organize when preparing ML model
-            # collect_LST(roi, start_date, end_date)
-            # collect_Land_Use(roi, start_date, end_date)
+            lst_image, lst_data = collect_LST(roi, start_date, end_date)
+            land_use_data = collect_Land_Use(roi, start_date, end_date)
+            veg_data = collect_vegetation_indices(roi, start_date, end_date)
+
+            data = {
+                "LST": lst_data,
+                "Land_Use": land_use_data,
+                "Vegetation": veg_data,
+            }
+
+            model, metrics = train_model(data)
+            print("Training complete.")
 
         case "Heat Map":
             heat_map = create_heat_map(roi, city, start_date, end_date)
