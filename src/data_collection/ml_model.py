@@ -36,8 +36,16 @@ def train_model(data: dict):
         X = pd.DataFrame({"Land_Use": [land_use], "NDVI": [ndvi], "EVI": [evi]})
         y = [lst_data.getInfo()]
 
-        # Split the data into training and test sets (Using all as training in this case for limited data)
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        # Check the number of samples (rows) to determine if splitting is meaningful
+        n_samples = len(X)
+        if n_samples < 2:
+            # If not enough data, train on the entire dataset without splitting
+            print(f"Warning: Not enough data ({n_samples} sample(s)), training on the entire dataset.")
+            X_train, y_train = X, y
+            X_test, y_test = X, y  # Same data for testing (not ideal, but required in this case)
+        else:
+            # Otherwise, perform a standard train-test split
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
         # Initialize and train the model
         model = LinearRegression()
@@ -53,5 +61,5 @@ def train_model(data: dict):
 
         return model, metrics
 
-    except Exception as e:
-        raise RuntimeError(f"Error training model: {str(e)}")
+    except Exception as error:
+        raise RuntimeError(f"Error training model: {str(error)}")

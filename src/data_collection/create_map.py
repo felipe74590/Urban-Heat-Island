@@ -210,7 +210,7 @@ def setting_region_of_interest(coordinates, year: str, task: str):
             }
 
             model, metrics = train_model(data)
-            print(f"Training complete. Model Metrics: {metrics}")
+            print("Training complete.")
 
         case "Heat Map":
             heat_map = create_heat_map(roi, city, start_date, end_date)

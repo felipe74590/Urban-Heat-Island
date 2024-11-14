@@ -6,8 +6,8 @@ To run main.py run ```uv run src/main.py -c``` in your terminal. This will promp
 To create Heat Map dashboard in streamlit run ```uv run streamlit run src/app.py```
 
 ## Running GOOGLE Earth Engine
-Recommend making your our project with Google Engine if testing.
-Using google earth engine requires an gmail, install ```geemap``` then, run this command in your virtual environment ```earthengine authenticate```. It will require you to follow the authentication process.
+Before running locally, you must create your our project with Google Engine. With your Google Engine Project name, set ```GEE_PROJECT = "ee-your_project_name"``` in your environment variables.
+Using google earth engine requires an gmail, install ```geemap``` then, run this command in your virtual environment ```uv run earthengine authenticate```. It will require you to follow the authentication process.
 Once data is collected and stored, this should not be needed unless new data is needed.
 
 ![image](https://github.com/user-attachments/assets/c9b89b58-2c9f-4558-8749-39e1de901f76)

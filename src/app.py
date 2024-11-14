@@ -16,13 +16,13 @@ def create_ubran_heat_map():
     try:
         city_coordinates = get_city_coordinates(city)
         Map = setting_region_of_interest(city_coordinates, year, "Heat Map")
-
-        if hasattr(Map, "to_streamlit"):
-            Map.to_streamlit()
-        else:
-            st.error("Map object does not support `to_streamlit()` method.")
     except ValueError:
         st.error
+
+    if hasattr(Map, "to_streamlit"):
+        Map.to_streamlit()
+    else:
+        st.error("Map object does not support `to_streamlit()` method.")
 
 
 if __name__ == "__main__":
